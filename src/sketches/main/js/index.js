@@ -2,8 +2,9 @@ import '../css/styles.scss';
 import clamp from '../../../util/clamp';
 
 const LIMINAL_MAX_SCALE = 1.5;
-const LIMINAL_MIN_OPACITY = 0.33;
+const LIMINAL_MIN_OPACITY = 0.5;
 const THRESHOLD_FACTOR = 0.66;
+const PINCH_THRESHOLD = 1;
 
 const getDefaultState = (els) => {
   const bb = els.root.getBoundingClientRect();
@@ -72,9 +73,10 @@ const handlePointerUp = (state, els, e) => {
   const nextLayerIndex = getNextLayerIndex(els.layers, state.activeLayerIndex);
   const nextLayer = els.layers[nextLayerIndex];
 
-  if (state.pinchAmount >= 1) {
+  if (state.pinchAmount >= PINCH_THRESHOLD) {
     activeLayer.classList.add('is-exiting');
     state.activeLayerIndex = nextLayerIndex;
+    document.documentElement.classList.remove('will-exit');
   } else {
     activeLayer.classList.add('is-resetting');
     activeLayer.style.opacity = 1;
@@ -96,6 +98,13 @@ const handlePinch = (pinchAmount, state, els) => {
   console.log(`pinch amount: ${pinchAmount}; scale: ${scale}`);
   activeLayer.style.transform = `scale(${scale})`;
   activeLayer.style.opacity = opacity;
+  if (pinchAmount >= PINCH_THRESHOLD) {
+    activeLayer.classList.add('will-exit');
+    document.documentElement.classList.add('will-exit');
+  } else if (pinchAmount < PINCH_THRESHOLD && activeLayer.classList.contains('will-exit')) {
+    activeLayer.classList.remove('will-exit');
+    document.documentElement.classList.remove('will-exit');
+  }
 };
 
 const getNextLayerIndex = (layers, activeIndex) => { 
