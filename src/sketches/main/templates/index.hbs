@@ -9,7 +9,7 @@
     <div class="container">
       <div id="root" class="parent">
         <div class="aspect-ratio-sizer">
-          {{#each data.layers}}
+          {{#each (reverse data.layers)}}
             <div class="layer">
               {{#each body}}
                 <p>{{.}}</p>

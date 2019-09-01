@@ -1,25 +1,33 @@
 import '../css/styles.scss';
 import clamp from '../../../util/clamp';
 
-const LIMINAL_MAX_SCALE = 3;
+const LIMINAL_MAX_SCALE = 1.5;
 const LIMINAL_MIN_OPACITY = 0.33;
-const THRESHOLD_FACTOR = 0.75;
+const THRESHOLD_FACTOR = 0.66;
 
-const getDefaultState = (root) => {
-  const bb = root.getBoundingClientRect();
+const getDefaultState = (els) => {
+  const bb = els.root.getBoundingClientRect();
   const minorAxis = Math.min(bb.width, bb.height);
   // REVIEW: some sort of smarter calculation here?
   const zoomThreshold = minorAxis * THRESHOLD_FACTOR;
   return {
     zoomThreshold,
-    distance : 0,
-    activeLayerIndex : 0
+    pinchAmount : 0,
+    activeLayerIndex : els.layers.length - 1,
+    startingDistance : 0
   };
 };
 
 const reset = (state) => {
-  state.distance = 0;
+  state.pinchAmount = 0;
+  state.startingDistance = 0;
 };
+
+const touchesToDistance = (touches) => {
+  const pos1 = [touches[0].clientX, touches[0].clientY];
+  const pos2 = [touches[1].clientX, touches[1].clientY];
+  return calculateDistance(pos1, pos2);
+}
 
 const calculateDistance = (pos1, pos2) => {
   const [x1, y1] = pos1;
@@ -31,20 +39,29 @@ const calculateDistance = (pos1, pos2) => {
   return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
 };
 
-const handlePointerMove = (state, els, e) => {
-  if (e.touches.length < 2) {
+const handlePointerDown = (state, els, e) => {
+  if (!e.touches || e.touches.length < 2) {
     return;
   }
 
-  const pos1 = [e.touches[0].clientX, e.touches[0].clientY];
-  const pos2 = [e.touches[1].clientX, e.touches[1].clientY];
-  const distance = calculateDistance(pos1, pos2);
-  
-  if (distance != state.distance) {
-    handlePinch(distance, state, els);
+  const distance = touchesToDistance(e.touches);
+  state.startingDistance = distance;
+}
+
+const handlePointerMove = (state, els, e) => {
+  if (!e.touches || e.touches.length < 2) {
+    return;
   }
 
-  state.distance = distance;
+  const distance = touchesToDistance(e.touches);
+  const distanceDelta = distance - state.startingDistance;
+  const pinchAmount = distanceDelta / state.zoomThreshold;
+  
+  if (distance != state.distance) {
+    handlePinch(pinchAmount, state, els);
+  }
+
+  state.pinchAmount = pinchAmount;
   return state;
 };
 
@@ -54,8 +71,10 @@ const handlePointerUp = (state, els, e) => {
   const activeLayer = els.layers[state.activeLayerIndex];
   const nextLayerIndex = getNextLayerIndex(els.layers, state.activeLayerIndex);
   const nextLayer = els.layers[nextLayerIndex];
-  if (state.distance > state.zoomThreshold) {
+
+  if (state.pinchAmount >= 1) {
     activeLayer.classList.add('is-exiting');
+    state.activeLayerIndex = nextLayerIndex;
   } else {
     activeLayer.classList.add('is-resetting');
     activeLayer.style.opacity = 1;
@@ -68,27 +87,25 @@ const handlePointerUp = (state, els, e) => {
   reset(state);
 };
 
-const handlePinch = (distance, state, els) => {
-  const isZoomingIn = distance > state.distance;
-  const pinchAmount = clamp(distance / state.zoomThreshold, 0, 1);
-  console.log(`Distance: ${distance}; Pinch: ${pinchAmount}`);
-  
+const handlePinch = (pinchAmount, state, els) => {
   // As user pinches, the top-most layer should grow and fade out
   // but not completely
   const activeLayer = els.layers[state.activeLayerIndex];
-  const scale = pinchAmount * LIMINAL_MAX_SCALE;
+  const scale = pinchAmount * (LIMINAL_MAX_SCALE - 1) + 1;
   const opacity = 1 - (pinchAmount * (1 - LIMINAL_MIN_OPACITY));
+  console.log(`pinch amount: ${pinchAmount}; scale: ${scale}`);
   activeLayer.style.transform = `scale(${scale})`;
   activeLayer.style.opacity = opacity;
 };
 
 const getNextLayerIndex = (layers, activeIndex) => { 
-  return layers[activeIndex + 1] ? activeIndex + 1 : 0;
+  return activeIndex > 0 ? (activeIndex - 1) : (layers.length - 1);
 };
 
 const getElements = (root) => {
   const layers = root.querySelectorAll('.layer');
   return {
+    root,
     layers
   };
 };
@@ -96,9 +113,9 @@ const getElements = (root) => {
 const init = () => {
   const root = document.getElementById('root');
   const els = getElements(root);
-  const state = getDefaultState(root);
-  console.log(els, state);
+  const state = getDefaultState(els);
 
+  root.addEventListener('touchstart', handlePointerDown.bind(this, state, els));
   root.addEventListener('touchmove', handlePointerMove.bind(this, state, els));
   root.addEventListener('touchend', handlePointerUp.bind(this, state, els));
 };

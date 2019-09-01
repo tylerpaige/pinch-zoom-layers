@@ -68,8 +68,8 @@ body {
   }
 }
 .layer.is-exiting {
-  transform: scale(5);
-  opacity: 0;
+  transform: scale(5) !important;
+  opacity: 0 !important;
   transition: transform 175ms ease-in, opacity 50ms linear;
 }
 .layer.is-resetting {
