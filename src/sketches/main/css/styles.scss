@@ -1,0 +1,77 @@
+@import '~reset-css';
+@import 'colors';
+@import 'footer';
+@import 'typography';
+
+@mixin cover() {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.parent {
+  width: 100%;
+  max-width: 450px;
+}
+
+.aspect-ratio-sizer {
+  padding-top: (11 / 8.5) * 100%;
+  position: relative;
+}
+
+.layer {
+  @include cover;
+  background: rgb(245, 238, 255);
+  &:before,
+  &:after {
+    content: '';
+    @include cover;
+    pointer-events: none;
+  }
+
+  // I wonder if u could get an even more hairline stroke
+  // if i made the befores and afters 200% and then scaled them down 0.5
+  &:before {
+    border: 2px solid rgb(255, 0, 0);
+  }
+  &:after {
+    border: 1px solid rgb(0, 255, 0);
+  }
+}
+.layer.is-exiting {
+  transform: scale(5);
+  opacity: 0;
+  transition: transform 175ms ease-in, opacity 50ms linear;
+}
+.layer.is-resetting {
+  transition: transform 175ms ease-in, opacity 50ms linear;
+}

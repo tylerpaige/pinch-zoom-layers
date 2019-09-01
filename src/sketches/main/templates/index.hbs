@@ -1,0 +1,28 @@
+{{var "data" htmlWebpackPlugin.options.data}}
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Noticia+Text" rel="stylesheet"> 
+  </head>
+  <body>
+    <div class="container">
+      <div id="root" class="parent">
+        <div class="aspect-ratio-sizer">
+          {{#each data.layers}}
+            <div class="layer">
+              {{#each body}}
+                <p>{{.}}</p>
+              {{/each}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p>
+        Read until you want to go deeper
+      </p>
+    </footer>
+  </body>
+</html>

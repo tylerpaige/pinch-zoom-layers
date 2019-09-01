@@ -1,0 +1,31 @@
+{{var "data" htmlWebpackPlugin.options.data}}
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Noticia+Text" rel="stylesheet"> 
+  </head>
+  <body>
+    <div class="pages">
+      {{#each data.stories}}
+        {{> page}}
+      {{/each}}
+    </div>
+    <nav>
+      <div id="root" class="parent">
+        <div class="square-sizer">
+          <div class="inner">
+            {{#each data.stories}}
+              {{> panel}}
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <footer>
+      <p>
+        Click and drag a square.
+      </p>
+    </footer>
+  </body>
+</html>
