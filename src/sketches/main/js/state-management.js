@@ -7,7 +7,6 @@ const getDefault = (els) => {
   return {
     zoomThreshold,
     pinchAmount : 0,
-    activeLayerIndex : els.layers.length - 1,
     startingDistance : 0,
     triggerHintIsVisible : false
   };
@@ -16,6 +15,7 @@ const getDefault = (els) => {
 const reset = (state) => {
   state.pinchAmount = 0;
   state.startingDistance = 0;
+  state.zoomManifest = null;
 };
 
 export {

@@ -3,19 +3,20 @@ import * as stateMgmt from './state-management';
 import { PINCH_THRESHOLD } from './constants';
 import { touchesToDistance, getNextLayerIndex } from './util';
 
-const handlePointerDown = (state, els, e) => {
+const handlePointerDown = (state, block, e) => {
   if (!e.touches || e.touches.length < 2) {
     return;
   }
 
-  const activeLayer = els.layers[state.activeLayerIndex];
-  ux.startPinchZoom(activeLayer);
+  ux.startPinchZoom(block);
+  const zoomManifest = ux.getZoomManifest(block);
 
   const distance = touchesToDistance(e.touches);
   state.startingDistance = distance;
+  state.zoomManifest = zoomManifest;
 }
 
-const handlePointerMove = (state, els, e) => {
+const handlePointerMove = (state, block, e) => {
   if (!e.touches || e.touches.length < 2) {
     return;
   }
@@ -25,44 +26,44 @@ const handlePointerMove = (state, els, e) => {
   const pinchAmount = distanceDelta / state.zoomThreshold;
   
   if (distance != state.distance) {
-    handlePinch(pinchAmount, state, els);
+    handlePinch(pinchAmount, state, block);
   }
 
   state.pinchAmount = pinchAmount;
   return state;
 };
 
-const handlePinch = (pinchAmount, state, els) => {
+const handlePinch = (pinchAmount, state, block) => {
   // As user pinches, the top-most layer should grow and fade out
   // but not completely
-  const activeLayer = els.layers[state.activeLayerIndex];
-  ux.pinchZoom(activeLayer, pinchAmount);
+  ux.pinchZoom(block, pinchAmount, state.zoomManifest);
   if (pinchAmount >= PINCH_THRESHOLD && !state.triggerHintIsVisible) {
-    ux.showTriggerHint(activeLayer);
+    ux.showTriggerHint(block);
     state.triggerHintIsVisible = true;
   } else if (pinchAmount < PINCH_THRESHOLD && state.triggerHintIsVisible) {
-    ux.hideTriggerHint(activeLayer);
+    ux.hideTriggerHint(block);
     state.triggerHintIsVisible = false;
   }
 };
 
-const handlePointerUp = (state, els, e) => {
-  // if distance is above zoomThreshold, trigger
-  // a layer switch
-  const activeLayer = els.layers[state.activeLayerIndex];
-  const nextLayerIndex = getNextLayerIndex(els.layers, state.activeLayerIndex);
-  const nextLayer = els.layers[nextLayerIndex];
-
-  ux.endPinchZoom(activeLayer);
+const handlePointerUp = (state, block, e) => {
+  if (state.isHandlingPointerUp) {
+    return;
+  }
+  state.isHandlingPointerUp = true;
+  console.log('pointer up')
+  ux.endPinchZoom(block);
 
   if (state.pinchAmount >= PINCH_THRESHOLD) {
-    ux.zoomIn(activeLayer);
-    state.activeLayerIndex = nextLayerIndex;
+    ux.zoomIn(block, state.zoomManifest);
   } else {
-    ux.cancelZoom(activeLayer);
+    ux.cancelZoom(block, state.zoomManifest);
   }
 
   stateMgmt.reset(state);
+  setTimeout(() => {
+    state.isHandlingPointerUp = false;
+  }, 500);
 };
 
 export {

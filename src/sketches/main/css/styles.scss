@@ -18,6 +18,12 @@ body {
 body {
   margin: 0;
 }
+html.has-zoomed-in {
+  &,
+  body {
+    overflow: hidden;
+  }
+}
 *,
 *:before,
 *:after {
@@ -42,8 +48,21 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
 
   transform: scale(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+.block.is-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.block.is-resetting > .block {
+  transition: transform 125ms ease-in;
 }
 
 .block__child-indicator {
