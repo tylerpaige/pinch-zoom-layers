@@ -1,27 +1,25 @@
 {
-  "layers" : [
+  "content" : [
     {
       "body" : [
         "I ask my banking app for my balance.",
-        "“Why?” it replies.",
-        "Such petulance from an interface, as if I hadn’t spent the morning thinking how to approach him, as if I hadn’t spent hours working up the confidence.",
-        "“Does my face no longer meet your eyes? My features distant?”",
-        "“Tell me, then, in which city is your vacation home?”"
-      ]
-    },
-    {
-      "body" : [
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia. "
       ]
     },
     {
       "body" : [
-        "Quisque ullamcorper vel massa in condimentum. Aliquam ac risus lectus. Proin porttitor dignissim nibh at hendrerit. Donec aliquet sem a eros maximus, placerat iaculis ante auctor. Curabitur facilisis ligula sed scelerisque aliquam. Curabitur in dignissim quam. Nullam auctor ex sit amet aliquam tincidunt. Integer lacinia quis justo a ultricies. Proin rutrum ullamcorper auctor. "
-      ]
+        "This section, then, will have a sub-layer, so you can pinch zoom to descend deeper."
+      ],
+      "child" : {
+        "body" : [
+          "Here is the child layer, or sub-layer. I should probably try to think of what this is actually called, because it will make it easier to style, like making classnames!"
+        ]
+      }
     },
     {
       "body" : [
-        "Maecenas porta ullamcorper ex id vulputate. Maecenas non augue iaculis, vulputate enim sit amet.s"
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia."
       ]
     }
   ]

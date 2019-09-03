@@ -6,24 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville|Noticia+Text" rel="stylesheet"> 
   </head>
   <body>
-    <div class="container">
-      <div id="root" class="parent">
-        <div class="aspect-ratio-sizer">
-          {{#each (reverse data.layers)}}
-            <div class="layer">
-              {{#each body}}
-                <p>{{.}}</p>
-              {{/each}}
-            </div>
-          {{/each}}
-        </div>
-      </div>
+    <div id="root" class="parent">
+      {{#each data.content}}
+        {{> block}}
+      {{/each}}
     </div>
-    <footer>
-      <p class="instructions instructions--release">Release to go deeper</p>
-      <p class="instructions instructions--start">
-        Read until you want to go deeper, then zoom
-      </p>
-    </footer>
   </body>
 </html>

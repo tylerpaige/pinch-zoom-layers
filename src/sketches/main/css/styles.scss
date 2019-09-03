@@ -14,13 +14,8 @@
 html,
 body {
   height: 100%;
-  overflow: hidden;
 }
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin: 0;
 }
 *,
@@ -29,95 +24,71 @@ body {
   box-sizing: border-box;
 }
 
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex: 1 1 auto;
-  width: 100%;
-  padding: 0 10px;
-}
-
-.parent {
-  width: 100%;
-  max-width: 450px;
-}
-
-.aspect-ratio-sizer {
-  padding-top: (11 / 8.5) * 100%;
+.block {
   position: relative;
-}
 
-.layer {
-  @include cover;
-  background: rgb(245, 238, 255);
-  background: #eee;
   padding: 1.4em 1.7em;
-  box-shadow: 0px 0px 0px rgba(0,0,0,0.0);
-
+  font-size: 21px;
   line-height: 1.25;
   font-family: sans-serif;
-  font-size: 20px;
-  color: #444;
+}
 
+.block .block {
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid black;
+  background: white;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: scale(0);
+}
+
+.block__child-indicator {
+  width: 2em;
+  height: 2em;
+  background: linear-gradient(to bottom left, rgba(255, 0, 0, 0.66), rgba(255, 0, 0, 0.1) 66%, transparent 100%);
+  top: 0.5em;
+  right: 0.5em;
+  position: absolute;
 
   &:before,
   &:after {
     content: '';
+    width: 33.33%;
+    height: 33.33%;
+    border-radius: 100%;
+    background: red;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 200%;
-    transform: scale(0.5);
-    transform-origin: top left;
-    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.79, 0, 0.26, 1);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
   &:before {
-    border: 2px solid rgb(255, 0, 0);
+    animation-name: childIndUpAndRight;
   }
   &:after {
-    border: 1px solid rgb(0, 255, 0);
+    animation-name: childIndDownAndLeft;
   }
 }
-.layer.is-exiting {
-  transform: scale(5) !important;
-  opacity: 0 !important;
-  transition: transform 175ms ease-in, opacity 50ms linear;
-}
-.layer.is-resetting {
-  transition: transform 175ms ease-in, opacity 50ms linear;
-}
-.layer.will-exit {
-  background-color: #FFD95B;
-  color: #3B2E02;
-}
-.layer.is-zooming {
-  box-shadow: 5px 5px 0px rgba(0,0,0,0.33);
-  transition: box-shadow 125ms linear;
-}
-
-.instructions {
-  background: white;
-  padding: 0.4em 0.7em;
-  border-radius: 1em;
-
-  display: inline-block;
-}
-
-.instructions--release {
-  display: none;
-
-  position: relative;
-  z-index: 100;
-}
-
-html.will-exit {
-  .instructions--start {
-    display: none;
+@keyframes childIndUpAndRight {
+  from {
+    transform: translate(0, -100%);
   }
-  .instructions--release {
-    display: inline-block;
+  to {
+    transform: translate(100%, -200%);
+  }
+}
+@keyframes childIndDownAndLeft {
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+    transform: translate(-200%, 100%);
   }
 }

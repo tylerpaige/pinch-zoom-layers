@@ -19,10 +19,19 @@ const getNextLayerIndex = (layers, activeIndex) => {
 };
 
 const getElements = (root) => {
-  const layers = root.querySelectorAll('.layer');
+  const blocksWithChildren = root.querySelectorAll('.block--has-child');
+  const blocks = Array.slice.call(blocksWithChildren, 0).reduce((acc, block) => {
+    const body = block.querySelector('.block__content');
+    const child = block.querySelector('.block');
+    return {
+      body,
+      child,
+      container : block,
+    }
+  }, []);
   return {
     root,
-    layers
+    blocks
   };
 };
 
