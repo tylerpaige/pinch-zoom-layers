@@ -5,6 +5,8 @@ import { touchesToDistance, getNextLayerIndex } from './util';
 import clamp from '../../../util/clamp';
 
 const handlePointerDown = (state, block, e) => {
+  e.preventDefault();
+  
   if (!e.touches || e.touches.length < 2) {
     return;
   }
