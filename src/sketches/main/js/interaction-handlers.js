@@ -1,5 +1,24 @@
 import { LIMINAL_MAX_SCALE, LIMINAL_MIN_OPACITY } from "./constants";
 
+const showStartScreen = () => {
+  document.documentElement.classList.add('start');
+};
+
+const hideStartScreen = () => {
+  document.documentElement.classList.remove('start');
+};
+
+const showPinchHint = block => {
+  block.container.classList.add('is-on-screen');
+  document.documentElement.classList.add('can-zoom-in');
+  hideStartScreen();
+};
+
+const hidePinchHint = block => {
+  block.container.classList.remove('is-on-screen');
+  document.documentElement.classList.remove('can-zoom-in');
+};
+
 const showTriggerHint = block => {
   block.container.classList.add("will-zoom-in");
   document.documentElement.classList.add("will-zoom-in");
@@ -47,7 +66,6 @@ const pinchZoom = (block, pinchAmount, zoomManifest) => {
 };
 
 const zoomIn = (block, zoomManifest) => {
-  console.log('zoom in');
   document.documentElement.classList.remove("will-zoom-in");
   document.documentElement.classList.add('has-zoomed-in');
   block.child.style.transform = `scale(1) translateY(${zoomManifest.translateYEnd}px)`;
@@ -56,7 +74,6 @@ const zoomIn = (block, zoomManifest) => {
 };
 
 const cancelZoom = block => {
-  console.log('cancel zoom');
   block.container.classList.add("is-resetting");
   block.child.style.opacity = 1;
   block.child.style.transform = "scale(0)";
@@ -73,5 +90,9 @@ export {
   cancelZoom,
   startPinchZoom,
   endPinchZoom,
-  getZoomManifest
+  getZoomManifest,
+  showPinchHint,
+  hidePinchHint,
+  showStartScreen,
+  hideStartScreen
 };

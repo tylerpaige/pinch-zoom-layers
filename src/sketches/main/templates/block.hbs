@@ -1,9 +1,11 @@
 <div class="block {{#if (has-children .)}}block--has-child{{/if}}">
+  <div class="block__sentinel block__sentinel--top"></div>
   <div class="block__content">
     {{#each body}}
       <p>{{.}}</p>
     {{/each}}
   </div>
+  <div class="block__sentinel block__sentinel--bottom"></div>
   {{#if (has-children .)}}
     <div class="block__child-indicator"></div>
     <div class="block__child">

@@ -52,7 +52,6 @@ const handlePointerUp = (state, block, e) => {
     return;
   }
   state.isHandlingPointerUp = true;
-  console.log('pointer up')
   ux.endPinchZoom(block);
 
   if (state.pinchAmount >= PINCH_THRESHOLD) {

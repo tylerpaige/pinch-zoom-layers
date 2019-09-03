@@ -1,0 +1,63 @@
+footer {
+  position: fixed;
+  bottom: 0;
+}
+.instructions {
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+
+  z-index: 1;
+  opacity: 0;
+
+  font-size: 16px;
+
+  transition: opacity 300ms linear;
+}
+.instructions p {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  background:#ffd3d3;
+  color: #351212;
+  border-radius: 1em;
+}
+
+$introDuration : 500ms;
+$onScreenDuration: 5000ms;
+$exitDuration: 4000ms;
+$totalDuration: $introDuration + $onScreenDuration + $exitDuration;
+html.start {
+  .instructions--start {
+    display: inline-block;
+    animation: startInstructions $totalDuration linear forwards;
+    transition: none;
+    transition-delay: 0;
+  }
+}
+@keyframes startInstructions {
+  0% {
+    opacity: 0;
+  }
+  #{$introDuration / $totalDuration * 100}% {
+    opacity: 1;
+  }
+  #{($introDuration + $onScreenDuration) / $totalDuration * 100}% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.instructions--pinch-here {
+  
+}
+
+html.can-zoom-in {
+  .instructions--pinch-here {
+    opacity: 1;
+    transition: opacity 500ms;
+    transition-delay: 600ms;
+  }
+}

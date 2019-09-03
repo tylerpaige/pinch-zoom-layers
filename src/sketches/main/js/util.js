@@ -25,9 +25,13 @@ const getElements = root => {
     .reduce((acc, block) => {
       const body = block.querySelector(".block__content");
       const child = block.querySelector(".block__child");
+      const sentinelTop = block.querySelector('.block__sentinel--top');
+      const sentinelBottom = block.querySelector('.block__sentinel--bottom');
       return acc.concat([{
         body,
         child,
+        sentinelTop,
+        sentinelBottom,
         container: block
       }]);
     }, []);

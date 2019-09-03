@@ -2,6 +2,7 @@
 @import 'colors';
 @import 'footer';
 @import 'typography';
+@import 'instructions';
 
 @mixin cover() {
   position: absolute;
@@ -17,6 +18,8 @@ body {
 }
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 html.has-zoomed-in,
 html.is-zooming-in {
@@ -29,6 +32,12 @@ html.is-zooming-in {
 *:before,
 *:after {
   box-sizing: border-box;
+}
+.parent {
+  flex: 1 1 auto;
+}
+footer {
+  flex: 0 0 auto;
 }
 
 .block {
@@ -62,7 +71,7 @@ html.is-zooming-in {
   left: 0;
   overflow: auto;
   pointer-events: all;
-  border-color: white;
+    border-color: white;
 }
 
 .block.is-resetting .block__child {
@@ -76,6 +85,8 @@ html.is-zooming-in {
   top: 0.5em;
   right: 0.5em;
   position: absolute;
+  opacity: 0;
+  transition: opacity 300ms linear;
 
   &:before,
   &:after {
@@ -97,6 +108,10 @@ html.is-zooming-in {
   }
   &:after {
     animation-name: childIndDownAndLeft;
+  }
+
+  .block.is-on-screen & {
+    opacity: 1;
   }
 }
 @keyframes childIndUpAndRight {
