@@ -12,10 +12,12 @@ const hideTriggerHint = block => {
 
 const startPinchZoom = block => {
   block.container.classList.add("is-zooming");
+  document.documentElement.classList.add('is-zooming');
 };
 
 const endPinchZoom = block => {
   block.container.classList.remove("is-zooming");
+  document.documentElement.classList.remove('is-zooming');
 };
 
 const getZoomManifest = block => {

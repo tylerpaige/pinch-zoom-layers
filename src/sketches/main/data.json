@@ -10,11 +10,32 @@
       "body" : [
         "This section, then, will have a sub-layer, so you can pinch zoom to descend deeper."
       ],
-      "child" : {
-        "body" : [
-          "Here is the child layer, or sub-layer. I should probably try to think of what this is actually called, because it will make it easier to style, like making classnames!"
-        ]
-      }
+      "children" : [
+        {
+          "body" : [
+            "Here is the child layer, or sub-layer. I should probably try to think of what this is actually called, because it will make it easier to style, like making classnames!"
+          ]
+        },
+        {
+          "body" : [
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia.",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia."
+          ]
+        },
+        {
+          "body" : [
+            "Now this paragraph will have another child, luv."
+          ],
+          "children" : [
+            {
+              "body" : [
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mattis a odio sed posuere. Fusce ut odio pulvinar, convallis nibh pellentesque, rhoncus nisi. Aliquam erat volutpat. In hac habitasse platea dictumst. Integer lacinia, massa id aliquam posuere, odio libero tristique sem, in varius justo quam eget ante. Sed vitae accumsan lectus. Cras dignissim maximus quam sit amet molestie. Nullam eget bibendum nibh, et consequat massa. Cras mollis lorem eget consequat lacinia."
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "body" : [

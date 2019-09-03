@@ -24,7 +24,7 @@ const getElements = root => {
     .call(blocksWithChildren, 0)
     .reduce((acc, block) => {
       const body = block.querySelector(".block__content");
-      const child = block.querySelector(".block");
+      const child = block.querySelector(".block__child");
       return acc.concat([{
         body,
         child,

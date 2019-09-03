@@ -2,6 +2,7 @@ import * as ux from './interaction-handlers';
 import * as stateMgmt from './state-management';
 import { PINCH_THRESHOLD } from './constants';
 import { touchesToDistance, getNextLayerIndex } from './util';
+import clamp from '../../../util/clamp';
 
 const handlePointerDown = (state, block, e) => {
   if (!e.touches || e.touches.length < 2) {
@@ -23,7 +24,7 @@ const handlePointerMove = (state, block, e) => {
 
   const distance = touchesToDistance(e.touches);
   const distanceDelta = distance - state.startingDistance;
-  const pinchAmount = distanceDelta / state.zoomThreshold;
+  const pinchAmount = clamp(distanceDelta / state.zoomThreshold, 0, 1);
   
   if (distance != state.distance) {
     handlePinch(pinchAmount, state, block);

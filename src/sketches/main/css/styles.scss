@@ -18,7 +18,8 @@ body {
 body {
   margin: 0;
 }
-html.has-zoomed-in {
+html.has-zoomed-in,
+html.is-zooming-in {
   &,
   body {
     overflow: hidden;
@@ -39,7 +40,7 @@ html.has-zoomed-in {
   font-family: sans-serif;
 }
 
-.block .block {
+.block__child {
   width: 100vw;
   height: 100vh;
   border: 1px solid black;
@@ -55,13 +56,16 @@ html.has-zoomed-in {
   pointer-events: none;
 }
 
-.block.is-active {
+.block__child.is-active {
   position: fixed;
   top: 0;
   left: 0;
+  overflow: auto;
+  pointer-events: all;
+  border-color: white;
 }
 
-.block.is-resetting > .block {
+.block.is-resetting .block__child {
   transition: transform 125ms ease-in;
 }
 

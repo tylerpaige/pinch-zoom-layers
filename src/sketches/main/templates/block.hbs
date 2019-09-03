@@ -1,11 +1,15 @@
-<div class="block {{#if (has-child .)}}block--has-child{{/if}}">
+<div class="block {{#if (has-children .)}}block--has-child{{/if}}">
   <div class="block__content">
     {{#each body}}
       <p>{{.}}</p>
     {{/each}}
   </div>
-  {{#if (has-child .)}}
+  {{#if (has-children .)}}
     <div class="block__child-indicator"></div>
-    {{> block child}}
+    <div class="block__child">
+      {{#each children}}
+        {{> block .}}
+      {{/each}}
+    </div>
   {{/if}}
 </div>
